@@ -13,7 +13,8 @@
 using namespace std;
 
 int main(int argc, char *argv[])
-{
+{	
+	//initalizing variables
 	vector<string> codeVector;
 	ofstream fout;
 	ifstream fin;
@@ -21,6 +22,7 @@ int main(int argc, char *argv[])
 	string input;
 	string line;
 
+	//error message for incorrect command
   	if(argc < 2)
 		{cout << "ERROR - format should be: ./main inputFile\n"; exit(1);}
   	else
@@ -35,9 +37,11 @@ int main(int argc, char *argv[])
 
 	//LEXER
 	cout << "Time for lexer to do its thing...." << endl;
-
+	//vector data type creation
 	vector<tokens> lexerStorage;
 	FSM machine;
+	
+	//initializing
 	int state = 0;
 	int lexStart = 0;
 
@@ -62,12 +66,12 @@ int main(int argc, char *argv[])
 					if (machine.getTokenName(state, lex) != "OTHER") {
 						lexerStorage.push_back(tokens(machine.getTokenName(state, lex), lex));
 					}
-				}
+				}//set state
 				state = 0;
 			}
 		}
 	}
-
+	//output file stream (tokens/lexemes) to text file.
 	fout.open("output.txt");
 	if(!fout.is_open()){ cout << "Output File Error\n"; exit(1);}
 	if (!syntaxAnalyze(lexerStorage, fout)) {
